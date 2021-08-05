@@ -1,0 +1,135 @@
+from pyautogui import *
+import pyautogui
+import time
+import keyboard
+import random
+import win32api, win32con
+
+#Mission select Pos_x = 972 Pos_y =742
+#stamina select Pos_x = 972 Pos_y =742
+#friend slect Pos_x = 858 Pos_y = 662
+#start select Pos_x = 1140 Pos_y =870
+#move select Pos_x = 1094 Pos_y =821
+#attack select Pos_x = 928 Pos_y =536
+#okay select Pos_x = 936 Pos_y =982
+#friend cancel select Pos_x = 839 Pos_y =688
+#okFriendLimit Pos_x = 903 Pos_y = 696
+
+
+time.sleep(4)
+
+
+
+
+try:
+    start=0
+    loop=True
+    while loop==True:
+        #start mission
+        if pyautogui.locateOnScreen('missionEdge.png',confidence=.95)!=None:
+            print("I can see mission")
+            click(pyautogui.locateCenterOnScreen('missionEdge.png', confidence=.8))
+        if pyautogui.locateOnScreen('eza.png', confidence=.8)!=None:
+            print("I can see EZA")
+            click(pyautogui.locateCenterOnScreen('eza.png', confidence=.8))
+        else:
+            print("I can't see mission")
+            
+        #selectStamina
+        if pyautogui.locateOnScreen('stamina.png',confidence=.8)!=None:
+            print("I can see stamina")
+            click(pyautogui.locateCenterOnScreen('stamina.png',confidence=.8))
+
+            #restore stamina
+            if pyautogui.locateOnScreen('restoreStamina.png', confidence=0.8)!=None:
+                print("i can see restore stamina")
+                click(pyautogui.locateCenterOnScreen('dragonStoneSelect.png', confidence=.8))
+                time.sleep(1.0)
+                print("clicking ok")
+                click(pyautogui.locateCenterOnScreen('okButton.png', confidence=.8))
+                time.sleep(1.0)
+                click(pyautogui.locateCenterOnScreen('okButton.png', confidence=.8))
+        else:
+            print("i can't see stamina")
+
+        #selectFriend
+        if pyautogui.locateOnScreen('selectFriend.png',confidence=.8)!=None:
+            print("I can see friend")
+            click(pyautogui.locateCenterOnScreen('friendSelect.png',confidence=.8))
+
+        else:
+            print("i can't see friend")
+
+        #startButton
+        if pyautogui.locateOnScreen('startButton.png', confidence=0.8)!=None:
+            print("I can see startButton")
+            click(pyautogui.locateCenterOnScreen('startButton.png',confidence=.8))
+        if pyautogui.locateOnScreen('startButton2.png', confidence=0.8)!=None:
+            print("I can see startButton")
+            click(pyautogui.locateCenterOnScreen('startButton2.png',confidence=.8))
+            
+        else:
+            print("i can't see startButton")
+        start=1
+        #movement
+        if start==1:
+            if pyautogui.locateOnScreen('moveButton.png',confidence=.8)!=None:
+                print("I can see moveButton")
+                click(pyautogui.locateCenterOnScreen('moveButton.png',confidence=.8))
+                #move when an arrow is present
+                if (pyautogui.locateOnScreen('arrowUpLeft.png', confidence=.7) or\
+                    pyautogui.locateOnScreen('arrowUpRight.png', confidence=.7) or\
+                    pyautogui.locateOnScreen('arrowDownLeft.png', confidence=.7) or\
+                    pyautogui.locateOnScreen('arrowDownRight.png', confidence=.7))!=None:
+                    print("I can see arrow")
+                    click(pyautogui.locateCenterOnScreen('arrowUpLeft.png', confidence=.7))
+                    click(pyautogui.locateCenterOnScreen('arrowUpRight.png', confidence=.7))
+                    click(pyautogui.locateCenterOnScreen('arrowDownLeft.png', confidence=.7))
+                    click(pyautogui.locateCenterOnScreen('arrowDownRight.png', confidence=.7))
+            else:
+                print("I can't see arrow")
+                #launch attack
+                click(928, 536)
+                print("Launched attack")
+
+        #endScreen
+        if pyautogui.locateOnScreen('endingScreen.png', confidence=0.8)!=None:
+            print("I can see endScreen")
+            click(pyautogui.locateCenterOnScreen('endOkButton.png',confidence=.8))
+            loop=False
+            start=0
+
+            print("loops stoped")
+            
+            #friendRequest
+            if pyautogui.locateOnScreen('friendRequest.png', confidence=0.5)!=None:
+                print("I can see friendRequest")
+                click(pyautogui.locateCenterOnScreen('friendRequestCancel.png', confidence=.9))
+            else:   
+                print("I can't see friendRequest")
+
+            #friendLimit
+            if pyautogui.locateOnScreen('friendLimit.png', confidence=0.5)!=None:
+                print("i can see friendLimit")
+                click(903, 696)
+            else:
+                print("i can't see friendLimit")
+                time.sleep(1)
+                                                              
+        else:
+            print("I can't see endScreen")
+        loop=True
+        print("-------------------------")
+except KeyboardInterrupt:
+    pass
+
+#click function
+def click(x,y):
+    win32api.SetCursorPos((x,y))    #moves mouse to correct position
+    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0) #clicks mouse doown
+    time.sleep(0.02) #this pauses the script for 0.01 seconds
+    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)#release mouse click
+    
+
+
+    
